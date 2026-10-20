@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elektrolisis · Pertemuan 1</title>
+<style>
+:root{--bg:#F2F5F7;--sf:#fff;--ink:#17232C;--mu:#55646F;--ln:#D3DCE2;--br:#0B6B75;--bi:#fff;--bs:#DDEFF1;--an:#B4530E;--as:#FBE8D6;--ka:#1F5FBF;--ks:#DCE8FA;--ok:#1B7F46;--oks:#DDF1E4;--bd:#B3321F;--bds:#F8DFDA;--melt:#FFE6C2;--el:#6A7782;--sh:rgba(23,35,44,.08);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1A21;--sf:#16242D;--ink:#E7EEF2;--mu:#9DB0BC;--ln:#2B3C47;--br:#4FC3CF;--bi:#062329;--bs:#17353B;--an:#F0A05A;--as:#3A2A1B;--ka:#7DB0F5;--ks:#1B2D49;--ok:#5CCB8A;--oks:#173326;--bd:#F08A7A;--bds:#3A1E1A;--melt:#3A3321;--el:#8FA0AC;--sh:rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0F1A21;--sf:#16242D;--ink:#E7EEF2;--mu:#9DB0BC;--ln:#2B3C47;--br:#4FC3CF;--bi:#062329;--bs:#17353B;--an:#F0A05A;--as:#3A2A1B;--ka:#7DB0F5;--ks:#1B2D49;--ok:#5CCB8A;--oks:#173326;--bd:#F08A7A;--bds:#3A1E1A;--melt:#3A3321;--el:#8FA0AC;--sh:rgba(0,0,0,.35);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:860px;margin:0 auto}
+h1,h2,h3{line-height:1.2;margin:0 0 8px}h1{font-size:clamp(26px,5.5vw,38px)}h3{font-size:19px}
+p{margin:0 0 .6em}.mu{color:var(--mu)}.eb{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:18px;margin-top:14px;box-shadow:0 1px 2px var(--sh)}
+.btn{background:var(--br);color:var(--bi);border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
+.btn.g{background:transparent;color:var(--br);border:1px solid var(--br)}.btn:disabled{opacity:.5}
+.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:10px}
+input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:9px 10px;width:100%;max-width:100%}
+textarea{min-height:84px;resize:vertical}label.f{display:block;font-weight:700;margin-top:12px}
+:focus-visible{outline:3px solid var(--br);outline-offset:2px}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;padding:8px 0;background:var(--bg);overflow-x:auto}
+.tab{flex:0 0 auto;border:1px solid var(--ln);background:var(--sf);color:var(--ink);border-radius:99px;padding:7px 13px;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected=true]{border-color:var(--br);box-shadow:inset 0 0 0 1px var(--br);color:var(--br);font-weight:700}
+.tab.on::after{content:" ✓";color:var(--ok);font-weight:700}
+.bar{height:8px;border-radius:99px;background:var(--ln);overflow:hidden;max-width:320px;flex:1}.bar i{display:block;height:100%;width:0;background:var(--br);transition:width .3s}
+.q{padding:14px 0;border-top:1px solid var(--ln)}.q:first-child{border-top:0}
+.stim{display:block;background:var(--bs);border-left:4px solid var(--br);border-radius:0 8px 8px 0;padding:8px 12px;margin:4px 0 8px;font-style:normal}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--ln);border-radius:8px;padding:9px 12px;margin-top:6px;cursor:pointer;background:var(--sf)}
+.opt input{margin-top:5px;width:17px;height:17px;accent-color:var(--br);flex:none}
+.q.ok .opt{opacity:.9}.q.ok{background:var(--oks);border-radius:8px;padding-inline:10px}.q.bad{background:var(--bds);border-radius:8px;padding-inline:10px}
+.fb{margin:6px 0 0;font-size:14.5px}.fb:empty{display:none}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bd)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}th,td{border:1px solid var(--ln);padding:7px 9px;text-align:left;vertical-align:top}th{background:var(--bs)}
+.bst td:first-child{width:62%}
+.rw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:4px 12px;align-items:center;padding:8px 10px;border:1px solid var(--ln);border-radius:8px;margin-top:8px}
+.rw.ok{background:var(--oks);border-color:var(--ok)}.rw.bad{background:var(--bds);border-color:var(--bd)}.rw .fb{grid-column:1/-1;margin:0}
+@media(max-width:560px){.rw{grid-template-columns:1fr}}
+details{border:1px solid var(--ln);border-radius:8px;padding:8px 12px;margin-top:8px}summary{cursor:pointer;font-weight:700;color:var(--br)}
+.tick{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--ln);font-size:13px;color:transparent;vertical-align:middle;margin-left:6px}.tick.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.res{background:var(--bs);border-radius:10px;padding:12px 14px;margin-top:12px}.res b{font-size:20px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.box{border-radius:10px;padding:10px 14px;border:1px solid var(--ln)}.box.an{background:var(--as);border-color:var(--an)}.box.ka{background:var(--ks);border-color:var(--ka)}
+.box h4{margin:0 0 4px}ul.t{margin:0;padding-left:20px}
+.sim{border:1px solid var(--ln);border-radius:10px;overflow:hidden;background:var(--bg)}svg{display:block;width:100%;height:auto}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:10px 12px;border-top:1px solid var(--ln);background:var(--sf)}
+.seg{display:inline-flex;border:1px solid var(--ln);border-radius:8px;overflow:hidden}.seg button{border:0;background:transparent;color:var(--ink);padding:8px 11px;font:inherit;font-size:14px;cursor:pointer}.seg button[aria-pressed=true]{background:var(--br);color:var(--bi);font-weight:700}
+.vn{padding:10px 12px;background:var(--bs);font-size:14.5px;border-top:1px solid var(--ln)}
+.liq{fill:var(--melt)}.bk{stroke:var(--ink);stroke-width:3;fill:none}.elc{fill:var(--el)}.dep{fill:#B9B5D0}.wr{stroke:var(--ink);stroke-width:3;fill:none}.pl{stroke:var(--ink);stroke-width:4}
+.cap{font-size:13px;fill:var(--mu);text-anchor:middle}.sg{font-size:20px;font-weight:700;fill:var(--ink);text-anchor:middle}
+.ion.na{fill:var(--as);stroke:var(--an);stroke-width:1.5}.ion.cl{fill:var(--ks);stroke:var(--ka);stroke-width:1.5}.it{font-size:12px;font-weight:700;fill:var(--ink)}
+.bub{fill:none;stroke:var(--ka);stroke-width:2}.ed{fill:var(--br)}.et{font-size:8px;fill:var(--bi);font-weight:700}
+.l1{font-size:15px;font-weight:700}.l1.an{fill:var(--an)}.l1.ka{fill:var(--ka)}.l2{font-size:12.5px;fill:var(--mu)}.eq{font-size:17px;font-family:ui-monospace,Menlo,Consolas,monospace;fill:var(--ink)}
+.tc{fill:var(--sf);stroke:var(--bd);stroke-width:2}.tt{font-size:15px;font-weight:700;fill:var(--bd)}.tl{stroke:var(--bd);stroke-width:1.5}
+svg[data-v=makro] .gi,svg[data-v=makro] .ge,svg[data-v=makro] .gl,svg[data-v=makro] .gq{display:none}
+svg[data-v=sub] .gq{display:none}svg[data-v=sim] .gb{display:none}svg[data-v=sim] .gi{opacity:.35}svg[data-v=sim] .ge{opacity:.5}
+.hint{font-size:14px;color:var(--mu)}.pw{display:inline-flex;gap:8px;align-items:center;font-weight:700;cursor:pointer}.pw input{width:20px;height:20px;accent-color:var(--br)}
+.model{margin-top:8px;padding:10px 12px;border-left:4px solid var(--ok);background:var(--oks);border-radius:0 8px 8px 0}
+footer{margin-top:28px;font-size:13px;color:var(--mu)}
+@media print{.tabs,.btn,#top .row{display:none}}
+</style><style>
+:root{--bg:#EAF6FB;--sf:#fff;--ink:#0F2438;--mu:#476072;--ln:#C9DEE8;--br:#0A7E9C;--bi:#fff;--bs:#DDF2F9;--an:#C2410C;--as:#FFE8D1;--ka:#1D4FD7;--ks:#DDE8FF;--ok:#15803D;--oks:#DCF5E5;--bd:#B91C1C;--bds:#FDE2E0;--melt:#FFE9B8;--el:#6B7C88}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#07131D;--sf:#0F2331;--ink:#E8F3F8;--mu:#9FB8C6;--ln:#23415A;--br:#3CC8E4;--bi:#04222C;--bs:#12394B;--an:#FFA05C;--as:#3D2615;--ka:#8DB4FF;--ks:#18305E;--ok:#5FD38D;--oks:#12331F;--bd:#FF8E84;--bds:#40201D;--melt:#40351A;--el:#8FA3B0}}
+:root[data-theme=dark]{--bg:#07131D;--sf:#0F2331;--ink:#E8F3F8;--mu:#9FB8C6;--ln:#23415A;--br:#3CC8E4;--bi:#04222C;--bs:#12394B;--an:#FFA05C;--as:#3D2615;--ka:#8DB4FF;--ks:#18305E;--ok:#5FD38D;--oks:#12331F;--bd:#FF8E84;--bds:#40201D;--melt:#40351A;--el:#8FA3B0}
+body{background:radial-gradient(900px 420px at 100% -10%,rgba(245,159,0,.16),transparent 60%),radial-gradient(800px 520px at -10% 0,rgba(10,126,156,.18),transparent 60%),var(--bg);background-attachment:fixed}
+.hero{position:relative;overflow:hidden;color:#fff;border-radius:20px;padding:22px 22px 18px;background:linear-gradient(135deg,#06283D 0%,#0B5C7A 55%,#12A1A6 100%);box-shadow:0 8px 24px rgba(6,40,61,.25)}
+.hero>*{position:relative;z-index:1}.hero h1{color:#fff;margin-bottom:6px}.hero p,.hero .mu,.hero .hint{color:rgba(255,255,255,.88)}.hero .eb{color:#FFD166;font-weight:700}
+.hero .btn.g{color:#fff;border-color:rgba(255,255,255,.7)}.hero .bar{background:rgba(255,255,255,.25)}.hero .bar i{background:linear-gradient(90deg,#FFD166,#FF922B)}
+.bolt{position:absolute!important;z-index:0!important;right:14px;top:6px;font-size:96px;line-height:1;opacity:.2;transform:rotate(12deg)}
+.bb{position:absolute!important;z-index:0!important;bottom:-20px;width:var(--s);height:var(--s);border:2px solid rgba(255,255,255,.5);border-radius:50%;animation:rise var(--d) linear infinite;animation-delay:var(--l)}
+@keyframes rise{to{transform:translateY(-300px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.bb{animation:none;opacity:.35}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}.chip{border-radius:99px;padding:4px 12px;font-size:13px;font-weight:700;color:#fff}
+.chip.an{background:#EA580C}.chip.ka{background:#2563EB}.chip.el{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5)}
+.card{border-radius:16px;border-top:5px solid var(--br)}
+#s0 .card{border-top-color:#0A7E9C}#s1 .card{border-top-color:#EA580C}#s2 .card{border-top-color:#B45309}#s3 .card{border-top-color:#1D4FD7}#s4 .card{border-top-color:#6D28D9}#s5 .card{border-top-color:#BE185D}#s6 .card{border-top-color:#15803D}
+.btn{background:linear-gradient(135deg,#FFB020,#F76707);color:#1B1200;box-shadow:0 2px 6px rgba(247,103,7,.3)}.btn.g{background:transparent;color:var(--br);box-shadow:none}.btn:hover:not(:disabled){filter:brightness(1.06)}
+.tab{border-width:1px 1px 3px;border-bottom-color:var(--tc,var(--br));font-weight:600}
+.tab:nth-child(1){--tc:#0A7E9C}.tab:nth-child(2){--tc:#EA580C}.tab:nth-child(3){--tc:#B45309}.tab:nth-child(4){--tc:#1D4FD7}.tab:nth-child(5){--tc:#6D28D9}.tab:nth-child(6){--tc:#BE185D}.tab:nth-child(7){--tc:#15803D}
+.tab[aria-selected=true]{background:var(--tc);color:#fff;border-color:var(--tc);box-shadow:none}
+.opt:hover{border-color:var(--br);background:var(--bs)}.opt:has(input:checked){border-color:var(--br);background:var(--bs)}
+.res{background:linear-gradient(135deg,var(--bs),var(--melt));border:1px solid var(--ln)}
+.sim{background:var(--bs);border-radius:14px}.box{border-radius:12px;border-width:2px}.box.an h4{color:var(--an)}.box.ka h4{color:var(--ka)}
+th{background:linear-gradient(135deg,#0A7E9C,#12A1A6);color:#fff}.model{border-radius:0 10px 10px 0}
+.tick.on{box-shadow:0 0 0 3px var(--oks)}.stim{border-left-color:#F59F00}
+</style></head><body>
+<!-- LOGIN -->
+<div id="login" class="wrap" style="padding-top:36px">
+  <div class="hero"><span class="bolt" aria-hidden="true">⚡</span><i class="bb" style="left:58%;--s:10px;--d:6s;--l:0s"></i><i class="bb" style="left:66%;--s:16px;--d:8s;--l:2s"></i><i class="bb" style="left:74%;--s:8px;--d:5s;--l:1s"></i><i class="bb" style="left:82%;--s:13px;--d:7s;--l:3s"></i><i class="bb" style="left:90%;--s:9px;--d:6.5s;--l:.5s"></i><div class="eb">Kimia XII · Fase F · SMAN 1 Tanjung</div>
+  <h1>Sel Elektrolisis: Prinsip Kerja</h1>
+  <p class="mu">Media interaktif Pertemuan 1 (2 JP). Masuk dulu dengan nama dan kelasmu supaya kemajuan belajarmu tersimpan.</p><div class="chips"><span class="chip an">Anode (+) · oksidasi</span><span class="chip ka">Katode (−) · reduksi</span><span class="chip el">⚡ listrik → reaksi kimia</span></div><p class="by" style="margin:8px 0 0;font-size:13.5px">👩‍🏫 Guru pembuat: <b>Kiky Astyana, S.Pd</b> · Guru Kimia SMA Negeri 1 Tanjung</p></div>
+  <div class="card">
+    <label class="f" for="inN" style="margin-top:0">Nama lengkap</label>
+    <input type="text" id="inN" autocomplete="name" placeholder="Contoh: Siti Aisyah">
+    <label class="f" for="inK">Kelas</label>
+    <input type="text" id="inK" placeholder="Contoh: XII MIPA 5">
+    <p class="fb bad" id="inE" style="min-height:0"></p>
+    <div class="row"><button class="btn" id="inGo">Masuk</button></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="wrap" hidden>
+  <header id="top" class="hero" style="margin-top:20px"><span class="bolt" aria-hidden="true">⚡</span><i class="bb" style="left:58%;--s:10px;--d:6s;--l:0s"></i><i class="bb" style="left:66%;--s:16px;--d:8s;--l:2s"></i><i class="bb" style="left:74%;--s:8px;--d:5s;--l:1s"></i><i class="bb" style="left:82%;--s:13px;--d:7s;--l:3s"></i><i class="bb" style="left:90%;--s:9px;--d:6.5s;--l:.5s"></i>
+    <div class="eb">Pertemuan 1 · Kimia XII (Fase F) · SMAN 1 Tanjung</div>
+    <h1>Sel Elektrolisis: Prinsip Kerja</h1>
+    <div class="row" style="margin-top:6px"><span id="who" class="mu"></span><button class="btn g" id="out" style="padding:5px 12px;font-size:13px">Keluar</button></div>
+    <div class="chips"><span class="chip an">Anode (+) · oksidasi</span><span class="chip ka">Katode (−) · reduksi</span><span class="chip el">⚡ listrik → reaksi kimia</span></div><p class="by" style="margin:8px 0 0;font-size:13.5px">👩‍🏫 Guru pembuat: <b>Kiky Astyana, S.Pd</b> · Guru Kimia SMA Negeri 1 Tanjung</p><div class="row"><span class="hint" id="pt"></span><div class="bar"><i id="pb"></i></div></div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Bagian pembelajaran"></nav>
+
+  <!-- 1 -->
+  <section class="sec" id="s0">
+    <div class="card"><h2>🧪 Asesmen Awal</h2>
+      <p class="mu">Lima soal pilihan ganda untuk melihat kesiapanmu (sel volta, redoks, kelistrikan). Ini bukan penentu nilai, jawab sejujurnya. Setiap soal punya lima pilihan.</p>
+      <div id="preH"></div></div>
+  </section>
+  <!-- 2 -->
+  <section class="sec" id="s1" hidden>
+    <div class="card"><h2>🔋 Apersepsi: Listrik yang “Memaksa” Reaksi</h2>
+      <p>Buka tiga contoh di sekitarmu. Perhatikan apa yang sama dari ketiganya.</p>
+      <details><summary>1. Sendok atau perhiasan yang disepuh</summary><p style="margin-top:6px">Benda dilapisi logam tipis (misalnya perak atau emas) memakai arus listrik. Ion logam menerima elektron, lalu menempel di benda sebagai lapisan logam.</p></details>
+      <details><summary>2. Velg dan knalpot krom</summary><p style="margin-top:6px">Lapisan krom membuat logam mengilap dan tahan karat. Lapisan itu dibuat dengan mengalirkan arus listrik ke larutan yang mengandung ion krom.</p></details>
+      <details><summary>3. Mengisi daya baterai ponsel atau aki</summary><p style="margin-top:6px">Saat dicas, energi listrik dari charger disimpan kembali sebagai energi kimia di dalam baterai. Reaksi yang tadinya berjalan sendiri (saat baterai dipakai) dipaksa berbalik.</p></details>
+      <h3 style="margin-top:16px">Apa kesamaan ketiga contoh itu?</h3><div id="apO"></div><p class="fb" id="apF"></p>
+      <label class="f" for="apT">Pertanyaan pemantik: mengapa listrik dapat memaksa reaksi yang tidak spontan terjadi? (tulis dugaanmu)</label>
+      <textarea id="apT" placeholder="Menurutku ..."></textarea>
+    </div>
+  </section>
+  <!-- 3 -->
+  <section class="sec" id="s2" hidden>
+    <div class="card"><h2>🎯 Tujuan Pembelajaran</h2>
+      <p>Setelah pertemuan ini, kamu dapat <b>menjelaskan prinsip kerja sel elektrolisis</b> (komponen, reaksi di katode dan anode, arah elektron dan ion, termasuk pada tingkat submikroskopis) dan <b>membedakannya dari sel volta</b>.</p>
+      <h3>Kriteria keberhasilan</h3>
+      <ul class="t"><li>Aku dapat menyebut komponen sel elektrolisis dan fungsinya.</li><li>Aku dapat menentukan katode dan anode serta jenis reaksi di tiap elektrode.</li><li>Aku dapat menunjukkan arah gerak elektron dan ion.</li><li>Aku dapat menulis reaksi elektrolisis leburan NaCl.</li><li>Aku dapat menjelaskan mengapa tanda kutub anode berbeda pada sel volta dan sel elektrolisis.</li></ul>
+      <h3 style="margin-top:14px">Alur belajar hari ini</h3>
+      <p class="mu">Materi dan simulasi → LKPD interaktif (6 kegiatan) → Asesmen akhir (20 soal) → Refleksi.</p>
+      <label class="pw" style="margin-top:8px"><input type="checkbox" id="tjC"> Saya sudah membaca tujuan dan kriteria keberhasilan</label>
+    </div>
+  </section>
+  <!-- 4 -->
+  <section class="sec" id="s3" hidden>
+    <div class="card"><h2>⚙️ Materi: Komponen Sel Elektrolisis</h2>
+      <div class="two">
+        <div class="box"><h4>Sumber arus searah</h4><p class="mu" style="margin:0">Memberi energi listrik dan menentukan tanda kutub elektrode.</p></div>
+        <div class="box"><h4>Dua elektrode</h4><p class="mu" style="margin:0">Inert (C, Pt) atau aktif (Cu, Ag, Ni). Di sini dipakai karbon.</p></div>
+        <div class="box"><h4>Elektrolit</h4><p class="mu" style="margin:0">Leburan atau larutan berisi ion yang bergerak bebas.</p></div>
+        <div class="box"><h4>Kawat penghubung</h4><p class="mu" style="margin:0">Jalan elektron di rangkaian luar.</p></div>
+      </div>
+      <div class="two" style="margin-top:12px">
+        <div class="box an"><h4>Anode (+)</h4><p style="margin:0">Terhubung ke kutub positif. <b>Oksidasi</b>. Anion tertarik ke sini.</p></div>
+        <div class="box ka"><h4>Katode (−)</h4><p style="margin:0">Terhubung ke kutub negatif. <b>Reduksi</b>. Kation tertarik ke sini.</p></div>
+      </div>
+    </div>
+    <div class="card"><h2>⚗️ Simulasi: Elektrolisis Leburan NaCl</h2>
+      <p>Nyalakan sumber arus, lalu pindah-pindah tiga tingkat pengamatan. Kamu akan memakai hasil pengamatan ini di LKPD.</p>
+      <div class="sim"><svg id="sim" data-v="sub" role="img" aria-label="Simulasi sel elektrolisis leburan NaCl"></svg>
+        <div class="vn" id="vn" aria-live="polite"></div>
+        <div class="ctl"><label class="pw"><input type="checkbox" id="pw"> Sumber arus</label>
+          <div class="seg" role="group" aria-label="Tingkat pengamatan"><button data-v="makro" aria-pressed="false">Makroskopis</button><button data-v="sub" aria-pressed="true">Submikroskopis</button><button data-v="sim" aria-pressed="false">Simbolik</button></div>
+          <button class="btn g" id="rs" style="padding:6px 12px">Ulangi</button>
+          <span class="hint">Na terbentuk <b id="nNa">0</b> · Cl₂ terbentuk <b id="nCl">0</b></span></div></div>
+      <p class="hint" style="margin-top:8px">Perhatikan perbandingan jumlah Na dan Cl₂ yang terbentuk. <span id="mtF"></span></p>
+    </div>
+    <div class="card"><h2>⚖️ Sel Volta vs Sel Elektrolisis</h2>
+      <div style="overflow-x:auto"><table><tr><th>Aspek</th><th>Sel volta</th><th>Sel elektrolisis</th></tr>
+      <tr><td>Perubahan energi</td><td>Kimia → listrik</td><td>Listrik → kimia</td></tr>
+      <tr><td>Reaksi</td><td>Spontan</td><td>Tidak spontan</td></tr>
+      <tr><td>Sumber arus luar</td><td>Tidak perlu</td><td>Perlu</td></tr>
+      <tr><td>Anode</td><td>Negatif, oksidasi</td><td>Positif, oksidasi</td></tr>
+      <tr><td>Katode</td><td>Positif, reduksi</td><td>Negatif, reduksi</td></tr></table></div>
+      <p class="mu" style="margin-top:8px">Kunci: <b>anode selalu oksidasi dan katode selalu reduksi</b>. Yang berbeda hanya tanda kutubnya, karena pada sel elektrolisis sumber arus luar yang menentukannya.</p>
+    </div>
+  </section>
+  <!-- 5 -->
+  <section class="sec" id="s4" hidden>
+    <div class="card"><h2>📝 LKPD-1 Interaktif</h2><p class="mu">Kerjakan berurutan. Gunakan hasil simulasi di bagian Materi bila perlu. Kegiatan yang benar semua akan diberi centang.</p></div>
+    <div class="card"><h3>Kegiatan 1 · Prediksi<span class="tick" id="tk1">✓</span></h3>
+      <p>Dua batang karbon dicelupkan ke leburan NaCl lalu dihubungkan ke sumber arus searah. Apa yang kamu perkirakan terjadi?</p><div id="k1"></div>
+      <label class="f" for="k1t">Alasanku</label><textarea id="k1t" placeholder="Karena ..."></textarea>
+      <div class="row"><button class="btn" id="k1b">Simpan prediksi</button></div><p class="fb" id="k1f"></p></div>
+    <div class="card"><h3>Kegiatan 2 · Amati simulasi<span class="tick" id="tk2">✓</span></h3><div id="k2"></div></div>
+    <div class="card"><h3>Kegiatan 3 · Lengkapi gambar sel<span class="tick" id="tk3">✓</span></h3><div class="sim"><svg id="qc" role="img" aria-label="Gambar sel elektrolisis dengan empat bagian bernomor"></svg></div>
+      <details><summary>Butuh petunjuk?</summary><p style="margin-top:6px">Pada simbol baterai, plat yang lebih panjang adalah kutub positif. Elektrode yang terhubung ke kutub positif disebut anode.</p></details><div id="k3"></div></div>
+    <div class="card"><h3>Kegiatan 4 · Tulis reaksinya<span class="tick" id="tk4">✓</span></h3><div id="k4"></div></div>
+    <div class="card"><h3>Kegiatan 5 · Bandingkan dengan sel volta<span class="tick" id="tk5">✓</span></h3><p>Tentukan pernyataan ini milik sel yang mana.</p><div id="k5"></div></div>
+    <div class="card"><h3>Kegiatan 6 · Berpikir kritis<span class="tick" id="tk6">✓</span></h3>
+      <p><b>Pada sel volta anode negatif, tetapi pada sel elektrolisis anode positif. Mengapa bisa berbeda, padahal di keduanya anode adalah tempat oksidasi? Kaitkan dengan peran sumber arus.</b></p>
+      <details><summary>Petunjuk</summary><p style="margin-top:6px">Pada sel elektrolisis, siapa yang menentukan elektrode mana yang positif atau negatif? Anion yang tertarik ke kutub positif melepas elektron di sana.</p></details>
+      <label class="f" for="k6t">Tulis dengan pola klaim, bukti, alasan.</label><textarea id="k6t" placeholder="Menurutku ..."></textarea>
+      <div class="row"><button class="btn" id="k6b" disabled>Bandingkan dengan jawaban contoh</button><span class="hint" id="k6h">Aktif setelah kamu menulis minimal satu kalimat.</span></div>
+      <div class="model" id="k6m" hidden><b>Jawaban contoh.</b> Pada sel volta reaksi berjalan spontan: anode melepas elektron sehingga menjadi kutub negatif. Pada sel elektrolisis, tanda kutub ditentukan sumber arus luar. Elektrode yang dihubungkan ke kutub positif menarik anion, dan anion itu melepas elektron di sana (oksidasi). Jadi anode tetap tempat oksidasi, hanya tandanya yang bergantung pada cara sel digerakkan. Sudahkah tulisanmu menyebut peran sumber arus?</div></div>
+  </section>
+  <!-- 6 -->
+  <section class="sec" id="s5" hidden>
+    <div class="card"><h2>🏆 Asesmen Akhir</h2>
+      <p class="mu">20 soal format TKA: 14 pilihan ganda (5 opsi), 3 pilihan ganda kompleks (pilih semua yang benar), dan 3 soal benar-salah. Urutan opsi diacak. Kerjakan sendiri, lalu kirim jawaban.</p>
+      <div id="postH"></div></div>
+  </section>
+  <!-- 7 -->
+  <section class="sec" id="s6" hidden>
+    <div class="card"><h2>💭 Refleksi</h2>
+      <label class="f" for="r1" style="margin-top:0">Satu hal yang sudah kupahami</label><textarea id="r1"></textarea>
+      <label class="f" for="r2">Satu hal yang masih membingungkan</label><textarea id="r2"></textarea>
+      <label class="f" for="r3">Satu pertanyaan untuk pertemuan berikutnya</label><textarea id="r3"></textarea>
+      <h3 style="margin-top:16px">Penilaian diri</h3><div id="sd"></div>
+      <div class="row"><button class="btn" id="rb">Simpan refleksi dan lihat rekap</button><span class="hint" id="rh"></span></div>
+      <div id="rk"></div>
+      <p class="mu" style="margin-top:12px">Tugas mandiri sebelum Pertemuan 2: ulangi deret Volta dan nilai potensial elektrode standar (E°).</p>
+    </div>
+  </section>
+  <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn g" id="pv">‹ Sebelumnya</button><button class="btn" id="nx">Lanjut ›</button></div>
+  <footer>Guru pembuat: Kiky Astyana, S.Pd · Guru Kimia SMA Negeri 1 Tanjung · Kimia kelas XII. Kemajuanmu tersimpan di peramban ini.</footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var ST={},KEY='',cur=0,inited=false;
+var SEC=['pre','ap','tj','mt','lk','post','ref'],NM=['🧪 Asesmen Awal','🔋 Apersepsi','🎯 Tujuan','⚗️ Materi & Simulasi','📝 LKPD','🏆 Asesmen Akhir','💭 Refleksi'];
+function sv(){try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
+function ld(){try{var r=localStorage.getItem(KEY);ST=r?JSON.parse(r):{}}catch(e){ST={}}ST.done=ST.done||{};ST.lk=ST.lk||{}}
+function done(k){ST.done[k]=1;sv();prog()}
+function prog(){var n=SEC.filter(function(k){return ST.done[k]}).length;$('#pt').textContent=n+' dari 7 bagian selesai';$('#pb').style.width=(n/7*100)+'%';$$('.tab').forEach(function(b,j){b.classList.toggle('on',!!ST.done[SEC[j]])})}
+function go(i){cur=Math.max(0,Math.min(6,i));$$('.sec').forEach(function(s,j){s.hidden=j!==cur});$$('.tab').forEach(function(b,j){b.setAttribute('aria-selected',String(j===cur))});$('#pv').style.visibility=cur?'visible':'hidden';$('#nx').style.visibility=cur<6?'visible':'hidden';window.scrollTo(0,0)}
+
+/* login */
+function login(){
+  var n=$('#inN').value.trim().replace(/\s+/g,' '),k=$('#inK').value.trim().replace(/\s+/g,' ');
+  if(n.length<3||k.length<2){$('#inE').textContent='Isi nama lengkap dan kelas dulu.';return}
+  KEY='elk1:'+(n+'|'+k).toLowerCase();ld();ST.nama=n;ST.kelas=k;sv();
+  $('#login').hidden=true;$('#app').hidden=false;$('#who').textContent=n+' · '+k;
+  if(!inited){inited=true;init()}
+  prog();go(0)
+}
+$('#inGo').onclick=login;$('#inK').onkeydown=$('#inN').onkeydown=function(e){if(e.key==='Enter')login()};
+$('#out').onclick=function(){location.reload()};
+$('#pv').onclick=function(){go(cur-1)};$('#nx').onclick=function(){go(cur+1)};
+
+/* kirim ke Google Sheets (Apps Script Web App) */
+var GAS='https://script.google.com/macros/s/AKfycbwlr3KupCoJboLlHY6OYJ4cGG6GtPDlRpZoQwdAEQJXI6GsxEZReE7_-p2iyy67_vbu/exec';
+function kirim(p,host){
+  var d={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),nama:ST.nama,kelas:ST.kelas,waktu:new Date().toISOString(),pertemuan:1,materi:'Prinsip Kerja Sel Elektrolisis'};for(var k in p)d[k]=p[k];
+  var f=el('p','fb','');if(host)host.appendChild(f);
+  function gagal(m){f.className='fb bad';f.innerHTML=m+' <button class="btn g" style="padding:3px 10px">Kirim ulang</button>';$('button',f).onclick=coba}
+  function coba(){f.className='fb';f.textContent='Mengirim data ke guru…';
+    fetch(GAS,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).then(function(r){return r.text()}).then(function(t){
+      t=(t||'').trim();if(/^ok/i.test(t)){f.className='fb ok';f.textContent='Data sudah diterima guru.'}else gagal('Server guru menolak data ('+t.replace(/<[^>]*>/g,' ').slice(0,90)+').')
+    }).catch(function(){
+      fetch(GAS,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).then(function(){f.className='fb';f.innerHTML='Data sudah dikirim, tetapi jawaban penerimaan tidak bisa dibaca dari sini. Guru akan mengeceknya di spreadsheet. <button class="btn g" style="padding:3px 10px">Kirim ulang</button>';$('button',f).onclick=coba}).catch(function(){gagal('Tidak ada koneksi internet atau pengiriman diblokir.')})})}
+  coba()}
+/* quiz engine */
+function quiz(host,items,key,fin){
+  var S=ST[key];
+  if(S&&!host._r){host.innerHTML='<div class="res">Hasil tersimpan: <b>'+S.s+' / '+items.length+'</b>'+(fin?' (nilai '+Math.round(S.s/items.length*100)+')':'')+'.</div><div class="row"><button class="btn g">Kerjakan ulang</button></div>';$('button',host).onclick=function(){host._r=1;quiz(host,items,key,fin)};return}
+  var h='',ord=items.map(function(it){return it.t=='bs'?0:shuf(it.o.map(function(_,i){return i}))});
+  items.forEach(function(it,n){
+    h+='<div class="q" id="'+key+n+'"><p><b>'+(n+1)+'.</b> '+(it.s?'<span class="stim">'+it.s+'</span>':'')+it.q+'</p>';
+    if(it.t=='bs')h+='<div style="overflow-x:auto"><table class="bst">'+it.r.map(function(r,i){return '<tr><td>'+r[0]+'</td><td><label><input type="radio" name="'+key+n+'_'+i+'" value="1"> Benar</label></td><td><label><input type="radio" name="'+key+n+'_'+i+'" value="0"> Salah</label></td></tr>'}).join('')+'</table></div>';
+    else h+=ord[n].map(function(oi,p){return '<label class="opt"><input type="'+(it.t=='kx'?'checkbox':'radio')+'" name="'+key+n+'" value="'+oi+'"><span>'+'ABCDE'[p]+'. '+it.o[oi]+'</span></label>'}).join('');
+    h+='<p class="fb"></p></div>'});
+  host.innerHTML=h+'<div class="row"><button class="btn" id="'+key+'G">Kirim jawaban</button><span class="hint" id="'+key+'M"></span></div><div id="'+key+'R"></div>';
+  var warned=false;
+  $('#'+key+'G').onclick=function(){
+    var sc=0,bl=0,rs=[];
+    items.forEach(function(it,n){var ok,ch;
+      if(it.t=='bs'){ch=it.r.map(function(r,i){var c=$('input[name="'+key+n+'_'+i+'"]:checked');return c?c.value:null});if(ch.indexOf(null)>-1)bl++;ok=ch.every(function(v,i){return v!==null&&(v=='1')===it.r[i][1]})}
+      else{ch=$$('input[name="'+key+n+'"]:checked').map(function(c){return +c.value});if(!ch.length)bl++;var A=[].concat(it.a);ok=ch.length==A.length&&A.every(function(x){return ch.indexOf(x)>-1})}
+      rs.push(ok);if(ok)sc++});
+    if(bl&&!warned){warned=true;$('#'+key+'M').textContent=bl+' soal belum dijawab. Tekan lagi untuk tetap mengirim.';return}
+    items.forEach(function(it,n){var b=$('#'+key+n);b.classList.add(rs[n]?'ok':'bad');var f=$('.fb',b);f.className='fb '+(rs[n]?'ok':'bad');f.textContent=(rs[n]?'Benar. ':'Belum tepat. ')+it.w;$$('input',b).forEach(function(i){i.disabled=true})});
+    ST[key]={s:sc};sv();this.disabled=true;$('#'+key+'M').textContent='';
+    var m=fin?(sc/items.length>=.75?'Kamu sudah mencapai tujuan pembelajaran. Pertahankan!':'Belum mencapai 75. Ulangi simulasi dan LKPD, lalu baca pembahasan di bawah tiap soal.'):(sc>=4?'Kesiapanmu baik untuk materi elektrolisis.':sc>=2?'Kesiapanmu cukup. Ulangi bagian sel volta dan redoks bila ragu.':'Kamu perlu menguatkan konsep dasar. Perhatikan pembahasan di bawah tiap soal.');
+    $('#'+key+'R').innerHTML='<div class="res">Skor: <b>'+sc+' / '+items.length+'</b>'+(fin?' · Nilai <b>'+Math.round(sc/items.length*100)+'</b>':'')+'<br>'+m+'</div>';
+    done(fin?'post':'pre');kirim({jenis:fin?'asesmen_akhir':'asesmen_awal',skor:sc,total:items.length,nilai:Math.round(sc/items.length*100),benar:rs.map(function(x){return x?1:0})},$('#'+key+'R'));$('#'+key+'R').scrollIntoView({block:'center'})};
+}
+/* select rows */
+function rows(host,rs,id,cb){
+  host.innerHTML='<div>'+rs.map(function(r,i){return '<div class="rw"><label for="'+id+i+'">'+r.l+'</label><select id="'+id+i+'"><option value="">Pilih jawaban</option>'+r.o.map(function(o){return '<option>'+o+'</option>'}).join('')+'</select><p class="fb"></p></div>'}).join('')+'</div><div class="row"><button class="btn">Periksa jawaban</button><span class="hint"></span></div>';
+  $('.btn',host).onclick=function(){var ok=0,f=0,D=$$('.rw',host);rs.forEach(function(r,i){var d=D[i],v=$('select',d).value,fb=$('.fb',d);if(!v){d.className='rw';fb.textContent='';return}f++;if(v==r.a){ok++;d.className='rw ok';fb.className='fb ok';fb.textContent=r.w||'Tepat.'}else{d.className='rw bad';fb.className='fb bad';fb.textContent=r.h||'Belum tepat. Cek kembali simulasi atau materi.'}});
+    $('.hint',host).textContent=ok+' dari '+rs.length+' tepat'+(f<rs.length?'. Masih ada yang belum dijawab.':'.');if(ok==rs.length)cb()}
+}
+function lk(k){ST.lk[k]=1;$('#tk'+k.slice(1)).classList.add('on');if(Object.keys(ST.lk).length>=6)done('lk');else sv()}
+
+/* svg */
+var NS='http://www.w3.org/2000/svg',AX=170,KX=448,EW=22,TOP=95,BOT=322,LIQ=190;
+function S_(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function cell(svg,tags){
+  svg.setAttribute('viewBox','0 0 640 430');
+  var h='<rect x="153" y="190" width="334" height="157" class="liq"/><path d="M150 140V350H490V140" class="bk"/><text x="320" y="372" class="cap">Leburan NaCl, dua elektrode karbon (C)</text><rect x="170" y="95" width="22" height="227" class="elc"/><rect x="448" y="95" width="22" height="227" class="elc"/><rect class="dep" id="dp" x="448" y="196" width="22" height="0"/><g class="gi"></g><g class="gb"></g><polyline points="181,95 181,60 296,60" class="wr"/><polyline points="459,95 459,60 332,60" class="wr"/><line x1="296" y1="42" x2="296" y2="78" class="pl"/><line x1="308" y1="50" x2="308" y2="70" class="pl"/><line x1="320" y1="42" x2="320" y2="78" class="pl"/><line x1="332" y1="50" x2="332" y2="70" class="pl"/>';
+  if(!tags)h+='<text x="279" y="56" class="sg">+</text><text x="349" y="56" class="sg">−</text><text x="314" y="26" class="cap">sumber arus searah</text><g class="ge"></g><g class="gl"><text x="162" y="122" text-anchor="end" class="l1 an">Anode (+)</text><text x="162" y="140" text-anchor="end" class="l2">oksidasi</text><text x="478" y="122" class="l1 ka">Katode (−)</text><text x="478" y="140" class="l2">reduksi</text></g><g class="gq"><text x="20" y="398" class="l1 an">Anode (+), oksidasi</text><text x="20" y="420" class="eq">2Cl⁻ → Cl₂ + 2e⁻</text><text x="340" y="398" class="l1 ka">Katode (−), reduksi</text><text x="340" y="420" class="eq">2Na⁺ + 2e⁻ → 2Na</text></g>';
+  else[[1,296,60,250,28],[2,332,60,380,28],[3,181,110,120,118],[4,459,110,500,118]].forEach(function(t){h+='<line x1="'+t[1]+'" y1="'+t[2]+'" x2="'+t[3]+'" y2="'+t[4]+'" class="tl"/><circle cx="'+t[3]+'" cy="'+t[4]+'" r="14" class="tc"/><text x="'+t[3]+'" y="'+(t[4]+5)+'" text-anchor="middle" class="tt">'+t[0]+'</text>'});
+  svg.innerHTML=h;return svg}
+function ion(g,type,x){var e=S_('g',{},g);S_('circle',{r:type=='na'?9:12,'class':'ion '+type},e);var t=S_('text',{'class':'it','text-anchor':'middle',y:4},e);t.textContent=type=='na'?'+':'−';var o={t:type,x:x||AX+EW+8+Math.random()*(KX-AX-EW-16),y:208+Math.random()*128,e:e};e.setAttribute('transform','translate('+o.x+','+o.y+')');return o}
+
+/* simulation */
+function sim(){
+  var svg=cell($('#sim'),false),gi=$('.gi',svg),gb=$('.gb',svg),ge=$('.ge',svg),dp=$('#dp',svg);
+  var W=[[181,95],[181,60],[296,60],[332,60],[459,60],[459,95]],L=[],T=0,i;for(i=0;i<5;i++){var dx=W[i+1][0]-W[i][0],dy=W[i+1][1]-W[i][1],l=Math.sqrt(dx*dx+dy*dy);L.push(l);T+=l}
+  function at(u){var d=((u%1)+1)%1*T;for(var i=0;i<5;i++){if(d<=L[i]){var t=d/L[i];return[W[i][0]+(W[i+1][0]-W[i][0])*t,W[i][1]+(W[i+1][1]-W[i][1])*t]}d-=L[i]}return W[5]}
+  var E=[];for(i=0;i<6;i++){var g=S_('g',{},ge);S_('circle',{r:7,'class':'ed'},g);S_('text',{'class':'et','text-anchor':'middle',y:3},g).textContent='e⁻';E.push(g)}
+  var s={on:false,ions:[],b:[],na:0,cl:0,u:0},seen={},ever=false;
+  function reset(){gi.innerHTML='';gb.innerHTML='';s.ions=[];s.b=[];s.na=s.cl=0;dp.setAttribute('height',0);dp.setAttribute('x',KX);dp.setAttribute('width',EW);$('#nNa').textContent=0;$('#nCl').textContent=0;for(var i=0;i<9;i++){s.ions.push(ion(gi,'cl'));s.ions.push(ion(gi,'na'))}}
+  reset();
+  var N={makro:'Makroskopis: yang bisa kamu lihat. Gelembung gas klor muncul di anode dan logam natrium menumpuk di katode.',sub:'Submikroskopis: Na⁺ bergerak ke katode (−), Cl⁻ bergerak ke anode (+). Elektron mengalir dari anode ke katode lewat kawat luar.',sim:'Simbolik: peristiwa tadi ditulis sebagai persamaan reaksi. Hitung jumlah elektron pada kedua persamaan.'};
+  function view(v){svg.setAttribute('data-v',v);$$('.seg button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.v==v))});$('#vn').textContent=N[v];seen[v]=1;chk()}
+  function chk(){if(ever&&seen.makro&&seen.sub&&seen.sim)done('mt')}
+  view('sub');$$('.seg button').forEach(function(b){b.onclick=function(){view(b.dataset.v)}});
+  $('#pw').onchange=function(){s.on=this.checked;if(s.on)ever=true;chk()};$('#rs').onclick=reset;
+  var last=performance.now();
+  function loop(t){var dt=Math.min(.05,(t-last)/1000);last=t;if(cur==3&&!$('#app').hidden){
+    s.ions.forEach(function(o){o.x+=(Math.random()-.5)*dt*160;o.y+=(Math.random()-.5)*dt*160;if(s.on)o.x+=(o.t=='na'?1:-1)*40*dt;o.y=Math.max(208,Math.min(336,o.y));
+      if(s.on&&o.t=='na'&&o.x>=KX-8){s.na++;var d=Math.min(9,s.na*.45);dp.setAttribute('x',KX-d);dp.setAttribute('width',EW+2*d);dp.setAttribute('height',BOT-LIQ-6);$('#nNa').textContent=s.na;o.x=AX+EW+10+Math.random()*80}
+      else if(s.on&&o.t=='cl'&&o.x<=AX+EW+8){s.cl++;if(s.cl%2==0){var b=S_('circle',{r:4+Math.random()*3,'class':'bub'},gb);s.b.push({x:AX-4+Math.random()*(EW+8),y:330,v:34+Math.random()*20,p:Math.random()*6,e:b});$('#nCl').textContent=s.cl/2}o.x=KX-10-Math.random()*80}
+      o.x=Math.max(AX+EW+8,Math.min(KX-8,o.x));o.e.setAttribute('transform','translate('+o.x.toFixed(1)+','+o.y.toFixed(1)+')')});
+    for(var i=s.b.length-1;i>=0;i--){var b=s.b[i];b.y-=b.v*dt;b.p+=dt*4;if(b.y<LIQ+4){gb.removeChild(b.e);s.b.splice(i,1);continue}b.e.setAttribute('cx',(b.x+Math.sin(b.p)*3).toFixed(1));b.e.setAttribute('cy',b.y.toFixed(1))}
+    if(s.on)s.u+=dt*.16;E.forEach(function(g,i){var p=at(s.u+i/6);g.setAttribute('transform','translate('+p[0].toFixed(1)+','+p[1].toFixed(1)+')')})}
+    requestAnimationFrame(loop)}
+  requestAnimationFrame(loop);
+}
+
+/* data */
+var PRE=[
+{t:'pg',q:'Pada sel volta, anode adalah elektrode tempat terjadinya…',o:['reduksi dan berkutub positif','oksidasi dan berkutub negatif','oksidasi dan berkutub positif','reduksi dan berkutub negatif','pengendapan logam dan bersifat netral'],a:1,w:'Anode sel volta melepas elektron (oksidasi) sehingga berkutub negatif.'},
+{t:'pg',q:'Perubahan Cl⁻ menjadi Cl₂ merupakan reaksi…',o:['reduksi karena bilangan oksidasinya turun','reduksi karena menerima elektron','oksidasi karena melepas elektron','autoredoks','bukan reaksi redoks'],a:2,w:'Cl⁻ melepas elektron dan bilangan oksidasinya naik dari −1 ke 0, itulah oksidasi.'},
+{t:'pg',q:'Pada sel volta Zn|Cu, elektron mengalir dari…',o:['Cu ke Zn lewat kawat luar','Zn ke Cu lewat kawat luar','Zn ke Cu lewat jembatan garam','Cu ke Zn lewat jembatan garam','Zn ke Zn²⁺ lewat larutan'],a:1,w:'Zn (anode) melepas elektron yang mengalir lewat kawat luar menuju Cu (katode).'},
+{t:'pg',q:'Arus 2 A mengalir selama 10 detik. Muatan listrik yang mengalir adalah…',o:['0,2 C','5 C','12 C','20 C','200 C'],a:3,w:'Q = I × t = 2 × 10 = 20 C.'},
+{t:'pg',q:'Leburan NaCl dapat menghantarkan listrik karena…',o:['mengandung elektron bebas','mengandung ion Na⁺ dan Cl⁻ yang bergerak bebas','mengandung molekul NaCl netral','mengandung atom Na dan Cl bebas','NaCl adalah logam'],a:1,w:'Saat melebur, ion-ion NaCl bebas bergerak sehingga dapat membawa muatan.'}];
+var FIN=[
+{t:'pg',q:'Perubahan energi yang terjadi pada sel elektrolisis adalah…',o:['energi kimia menjadi energi listrik','energi listrik menjadi energi kimia','energi kalor menjadi energi listrik','energi cahaya menjadi energi kimia','energi kimia menjadi energi kalor'],a:1,w:'Sel elektrolisis memakai energi listrik dari sumber arus untuk menjalankan reaksi kimia.'},
+{t:'pg',q:'Elektrode yang dihubungkan ke kutub negatif sumber arus pada sel elektrolisis disebut…',o:['anode, tempat oksidasi','anode, tempat reduksi','katode, tempat oksidasi','katode, tempat reduksi','katode, tempat netralisasi'],a:3,w:'Kutub negatif menarik kation; di katode terjadi reduksi.'},
+{t:'pg',s:'Leburan NaCl dielektrolisis dengan elektrode karbon.',q:'Zat yang terbentuk di katode dan anode berturut-turut adalah…',o:['Cl₂ dan Na','Na dan Cl₂','H₂ dan Cl₂','Na dan O₂','H₂ dan O₂'],a:1,w:'Katode: Na⁺ + e⁻ → Na. Anode: 2Cl⁻ → Cl₂ + 2e⁻. Tidak ada air pada leburan.'},
+{t:'pg',s:'Leburan NaCl dielektrolisis dengan elektrode karbon.',q:'Ion Na⁺ dan Cl⁻ bergerak berturut-turut menuju…',o:['anode dan katode','katode dan anode','katode dan katode','anode dan anode','tidak bergerak'],a:1,w:'Kation tertarik ke elektrode negatif (katode), anion ke elektrode positif (anode).'},
+{t:'pg',q:'Pada rangkaian luar sel elektrolisis, elektron mengalir dari…',o:['katode ke anode','anode ke katode melalui sumber arus','kutub negatif sumber arus ke anode','katode ke kutub positif sumber arus','larutan elektrolit ke katode'],a:1,w:'Anode melepas elektron yang mengalir lewat kawat dan sumber arus menuju katode.'},
+{t:'pg',q:'Ion Cl⁻ diubah menjadi Cl₂ di anode. Peristiwa ini disebut oksidasi karena…',o:['bilangan oksidasi Cl turun dari 0 ke −1','Cl⁻ menerima elektron','Cl⁻ melepas elektron dan bilangan oksidasinya naik dari −1 ke 0','Cl⁻ bereaksi dengan Na⁺','Cl⁻ berpindah ke katode'],a:2,w:'Oksidasi adalah pelepasan elektron atau kenaikan bilangan oksidasi.'},
+{t:'pg',q:'Pernyataan yang benar tentang tanda kutub anode adalah…',o:['sel volta positif, sel elektrolisis negatif','sel volta negatif, sel elektrolisis positif','keduanya positif','keduanya negatif','sel volta netral, sel elektrolisis negatif'],a:1,w:'Anode sel volta negatif (melepas elektron spontan); anode sel elektrolisis positif (terhubung ke kutub positif sumber).'},
+{t:'pg',s:'Sel elektrolisis leburan NaCl disusun dari sumber arus searah, dua elektrode karbon, kawat penghubung, dan leburan NaCl.',q:'Komponen yang berfungsi sebagai penghantar ion di dalam sel adalah…',o:['elektrode karbon','kawat penghubung','sumber arus searah','leburan NaCl (elektrolit)','kutub positif sumber arus'],a:3,w:'Ion Na⁺ dan Cl⁻ bergerak di dalam elektrolit. Elektron hanya mengalir di kawat dan elektrode.'},
+{t:'pg',q:'Pengamatan makroskopis pada elektrolisis leburan NaCl dengan elektrode karbon adalah…',o:['gelembung gas di katode dan logam menumpuk di anode','gelembung gas di anode dan logam natrium terbentuk di katode','gelembung gas H₂ di katode dan gas O₂ di anode','tidak ada perubahan yang teramati','kedua elektrode menjadi larut'],a:1,w:'Gas Cl₂ muncul sebagai gelembung di anode dan logam Na menumpuk di katode.'},
+{t:'pg',q:'Sel elektrolisis memerlukan sumber arus listrik dari luar karena…',o:['ion Na⁺ dan Cl⁻ hanya terbentuk saat ada arus','reaksi sel tidak spontan sehingga harus dipaksa berlangsung','karbon tidak dapat menghantarkan listrik','jumlah elektrode harus ditambah','katode harus dibuat positif'],a:1,w:'Reaksi elektrolisis tidak spontan; energi listrik luar dibutuhkan untuk memaksanya terjadi.'},
+{t:'pg',s:'Pada simulasi elektrolisis leburan NaCl, jumlah Na yang terbentuk di katode dua kali jumlah Cl₂ di anode.',q:'Penjelasan yang paling tepat berdasarkan reaksi elektrode adalah…',o:['Na lebih mudah terbentuk daripada Cl₂','Pembentukan 1 Cl₂ melepas 2 elektron, dan 2 elektron itu mereduksi 2 Na⁺ menjadi 2 Na','Pembentukan 1 Cl₂ melepas 1 elektron yang mereduksi 1 Na⁺','Na⁺ lebih banyak daripada Cl⁻ dalam leburan','Katode menghasilkan elektron tambahan'],a:1,w:'Anode: 2Cl⁻ → Cl₂ + 2e⁻. Katode: 2Na⁺ + 2e⁻ → 2Na. Elektron yang dilepas sama dengan yang diterima, sehingga Na : Cl₂ = 2 : 1.'},
+{t:'pg',s:'Rani berkata: “Pada sel volta katode berkutub positif, jadi pada sel elektrolisis elektrode positif juga disebut katode.”',q:'Tanggapan yang paling tepat terhadap pernyataan Rani adalah…',o:['Benar, tanda kutub menentukan nama elektrode','Salah, nama elektrode ditentukan oleh reaksinya; elektrode positif pada sel elektrolisis adalah anode','Salah, sel elektrolisis tidak memiliki anode','Benar, kutub positif selalu menerima elektron','Salah, pada sel elektrolisis tidak terjadi redoks'],a:1,w:'Anode selalu tempat oksidasi dan katode tempat reduksi. Elektrode positif pada sel elektrolisis melepas elektron, jadi anode.'},
+{t:'pg',s:'Sel X: reaksi spontan, energi kimia menjadi listrik, anode bermuatan negatif. Sel Y: reaksi tidak spontan, energi listrik menjadi kimia, anode bermuatan positif.',q:'Kesimpulan yang tepat adalah…',o:['X sel elektrolisis dan Y sel volta','X sel volta dan Y sel elektrolisis','keduanya sel volta','keduanya sel elektrolisis','X sel volta dan Y bukan sel elektrokimia'],a:1,w:'Sel volta bersifat spontan dan menghasilkan listrik. Sel elektrolisis tidak spontan dan memerlukan sumber arus.'},
+{t:'pg',s:'Pada elektrolisis leburan NaCl dengan elektrode karbon, polaritas sumber arus dibalik di tengah percobaan.',q:'Akibatnya…',o:['anode dan katode tidak berubah','elektrode yang tadi katode kini menjadi anode, dan Cl₂ terbentuk di elektrode itu','tidak terjadi reaksi apa pun','Na terbentuk di kedua elektrode','Cl₂ tetap terbentuk di elektrode semula'],a:1,w:'Tanda kutub ditentukan sumber arus. Setelah dibalik, elektrode yang kini positif menjadi anode dan menarik Cl⁻.'},
+{t:'kx',q:'Pilih semua pernyataan yang benar tentang elektrolisis leburan NaCl.',o:['Ion Na⁺ bergerak menuju katode','Ion Cl⁻ bergerak menuju katode','Katode berkutub negatif','Di anode terjadi reduksi','Gas Cl₂ terbentuk di anode'],a:[0,2,4],w:'Cl⁻ menuju anode dan di anode terjadi oksidasi. Tiga pernyataan lainnya benar.'},
+{t:'kx',q:'Pilih semua persamaan reaksi yang benar pada elektrolisis leburan NaCl.',o:['Katode: 2Na⁺ + 2e⁻ → 2Na','Anode: 2Cl⁻ → Cl₂ + 2e⁻','Anode: 2Na → 2Na⁺ + 2e⁻','Reaksi sel: 2Na⁺ + 2Cl⁻ → 2Na + Cl₂','Katode: Cl₂ + 2e⁻ → 2Cl⁻'],a:[0,1,3],w:'Katode mereduksi Na⁺, anode mengoksidasi Cl⁻, dan jumlahnya adalah reaksi sel.'},
+{t:'kx',q:'Pilih semua kesamaan antara sel volta dan sel elektrolisis.',o:['Oksidasi terjadi di anode','Reduksi terjadi di katode','Reaksi berlangsung spontan','Memerlukan sumber arus luar','Ion bergerak di dalam elektrolit'],a:[0,1,4],w:'Spontan dan sumber arus luar adalah perbedaannya: sel volta spontan tanpa sumber luar, sel elektrolisis tidak spontan dan perlu sumber luar.'},
+{t:'bs',s:'Sel elektrolisis leburan NaCl: elektrode P dihubungkan ke kutub positif sumber arus dan elektrode Q ke kutub negatif.',q:'Tentukan benar atau salah.',r:[['P adalah anode',true],['Di Q terjadi reduksi Na⁺ menjadi Na',true],['Ion Cl⁻ bergerak menuju Q',false]],w:'P anode (oksidasi), Q katode (reduksi). Cl⁻ bergerak ke P, bukan Q.'},
+{t:'bs',q:'Tentukan benar atau salah tentang sel elektrolisis.',r:[['Anode berkutub negatif',false],['Reaksi di dalam sel tidak berlangsung spontan',true],['Mengubah energi kimia menjadi energi listrik',false]],w:'Anode sel elektrolisis positif; reaksinya tidak spontan; energi listrik diubah menjadi energi kimia.'},
+{t:'bs',s:'Leburan NaCl dielektrolisis dengan elektrode karbon.',q:'Tentukan benar atau salah.',r:[['Elektron mengalir dari anode ke katode melalui kawat luar',true],['Reaksi di katode adalah 2Cl⁻ → Cl₂ + 2e⁻',false],['Gelembung gas teramati di anode',true]],w:'Elektron mengalir dari anode ke katode. Katode adalah tempat reduksi Na⁺ (bukan oksidasi Cl⁻), sedangkan Cl₂ terbentuk sebagai gelembung di anode.'}];
+
+/* init */
+function init(){
+  $('#tabs').innerHTML=NM.map(function(n,i){return '<button class="tab" data-i="'+i+'">'+(i+1)+'. '+n+'</button>'}).join('');
+  $$('.tab').forEach(function(b){b.onclick=function(){go(+b.dataset.i)}});
+  quiz($('#preH'),PRE,'pre',false);quiz($('#postH'),FIN,'post',true);
+  /* apersepsi */
+  var AO=['Reaksi kimia terjadi sendiri tanpa listrik','Listrik dari luar dipakai untuk menjalankan atau membalik reaksi kimia','Ketiganya menghasilkan listrik','Ketiganya hanya perubahan wujud','Tidak ada reaksi kimia pada ketiganya'];
+  AO.forEach(function(t,i){var b=el('button','opt',t);b.style.cssText='width:100%;text-align:left;font:inherit;color:inherit';b.onclick=function(){var f=$('#apF');if(i==1){f.className='fb ok';f.textContent='Tepat. Listrik memaksa reaksi yang tidak berjalan sendiri. Itulah prinsip sel elektrolisis.';done('ap')}else{f.className='fb bad';f.textContent='Belum tepat. Pikirkan dari mana energi untuk melapisi logam atau mengisi baterai berasal.'}};$('#apO').appendChild(b)});
+  /* tujuan */
+  $('#tjC').checked=!!ST.done.tj;$('#tjC').onchange=function(){if(this.checked)done('tj')};
+  sim();cell($('#qc'),true);
+  /* LKPD */
+  var P=[['Tidak ada perubahan. NaCl hanya menghantarkan listrik.',0,'Leburan NaCl berisi ion bergerak. Saat dialiri arus searah, ion-ion itu bereaksi di elektrode.'],['Logam natrium terbentuk di satu elektrode dan gas klor di elektrode yang lain.',1,'Tepat. Cek di simulasi: Na⁺ direduksi menjadi Na dan Cl⁻ dioksidasi menjadi Cl₂.'],['Gas hidrogen dan gas oksigen terbentuk.',0,'Itu terjadi pada larutan berair. Leburan tidak mengandung air.']];
+  P.forEach(function(p,i){var l=el('label','opt','<input type="radio" name="k1"><span>'+p[0]+'</span>');$('#k1').appendChild(l)});
+  $('#k1b').onclick=function(){var c=$$('input[name=k1]').findIndex?$$('input[name=k1]').findIndex(function(x){return x.checked}):-1,f=$('#k1f');if(c<0||$('#k1t').value.trim().length<8){f.className='fb bad';f.textContent='Pilih prediksi dan tulis alasanmu (minimal satu kalimat pendek).';return}f.className='fb '+(P[c][1]?'ok':'bad');f.textContent=P[c][2]+' Sekarang uji prediksimu di simulasi.';lk('k1')};
+  var EQ=['2Na⁺ + 2e⁻ → 2Na','2Na → 2Na⁺ + 2e⁻','2Cl⁻ → Cl₂ + 2e⁻','Cl₂ + 2e⁻ → 2Cl⁻','2Na⁺ + 2Cl⁻ → 2Na + Cl₂','2Na + Cl₂ → 2Na⁺ + 2Cl⁻'],J=['reduksi','oksidasi'],PL=['kutub positif','kutub negatif','anode','katode'];
+  rows($('#k2'),[
+   {l:'Ion yang bergerak ke elektrode negatif',o:['Na⁺','Cl⁻'],a:'Na⁺',w:'Kation tertarik ke elektrode negatif.'},
+   {l:'Ion yang bergerak ke elektrode positif',o:['Na⁺','Cl⁻'],a:'Cl⁻',w:'Anion tertarik ke elektrode positif.'},
+   {l:'Arah elektron di kawat luar',o:['dari anode ke katode','dari katode ke anode'],a:'dari anode ke katode',w:'Anode melepas elektron yang mengalir ke katode.'},
+   {l:'Zat yang terbentuk di katode',o:['logam Na','gas Cl₂'],a:'logam Na'},
+   {l:'Zat yang terbentuk di anode',o:['logam Na','gas Cl₂'],a:'gas Cl₂'},
+   {l:'Pengamatan makroskopis di anode',o:['muncul gelembung gas','muncul endapan logam'],a:'muncul gelembung gas',w:'Gas Cl₂ terlihat sebagai gelembung.'}],'a2',function(){lk('k2')});
+  rows($('#k3'),[
+   {l:'Nomor 1',o:PL,a:'kutub positif',w:'Plat panjang pada simbol baterai adalah kutub positif.'},
+   {l:'Nomor 2',o:PL,a:'kutub negatif',w:'Plat pendek adalah kutub negatif.'},
+   {l:'Nomor 3',o:PL,a:'anode',w:'Terhubung ke kutub positif, jadi anode.',h:'Lihat ke kutub mana kawat nomor 3 terhubung.'},
+   {l:'Nomor 4',o:PL,a:'katode',w:'Terhubung ke kutub negatif, jadi katode.',h:'Lihat ke kutub mana kawat nomor 4 terhubung.'},
+   {l:'Arah elektron di kawat luar',o:['dari anode ke katode','dari katode ke anode'],a:'dari anode ke katode'},
+   {l:'Na⁺ bergerak menuju',o:['katode','anode'],a:'katode'},
+   {l:'Cl⁻ bergerak menuju',o:['katode','anode'],a:'anode'}],'a3',function(){lk('k3')});
+  rows($('#k4'),[
+   {l:'Katode: jenis reaksi',o:J,a:'reduksi'},
+   {l:'Katode: persamaan',o:EQ,a:EQ[0],w:'Na⁺ menerima elektron menjadi logam Na.',h:'Di katode ion positif menerima elektron.'},
+   {l:'Anode: jenis reaksi',o:J,a:'oksidasi'},
+   {l:'Anode: persamaan',o:EQ,a:EQ[2],w:'Cl⁻ melepas elektron menjadi gas Cl₂.',h:'Di anode ion negatif melepas elektron.'},
+   {l:'Reaksi sel',o:EQ,a:EQ[4],w:'Jumlahkan kedua reaksi; elektron di kiri dan kanan saling meniadakan.',h:'Elektron yang dilepas di anode sama banyak dengan yang diterima di katode.'}],'a4',function(){lk('k4')});
+  var BB=['Sel volta','Sel elektrolisis','Keduanya'];
+  rows($('#k5'),[
+   {l:'Mengubah energi listrik menjadi energi kimia',o:BB,a:BB[1]},
+   {l:'Reaksinya berlangsung spontan',o:BB,a:BB[0]},
+   {l:'Anode berkutub negatif',o:BB,a:BB[0],w:'Anode sel volta melepas elektron spontan sehingga negatif.'},
+   {l:'Anode berkutub positif',o:BB,a:BB[1],w:'Anode sel elektrolisis dihubungkan ke kutub positif sumber.'},
+   {l:'Memerlukan sumber arus listrik dari luar',o:BB,a:BB[1]},
+   {l:'Katode berkutub positif',o:BB,a:BB[0]},
+   {l:'Di anode terjadi oksidasi',o:BB,a:BB[2],w:'Oksidasi selalu di anode pada jenis sel apa pun.'},
+   {l:'Di katode terjadi reduksi',o:BB,a:BB[2],w:'Reduksi selalu di katode pada jenis sel apa pun.'}],'a5',function(){lk('k5')});
+  $('#k6t').oninput=function(){var ok=this.value.trim().length>=25;$('#k6b').disabled=!ok;$('#k6h').hidden=ok};
+  $('#k6b').onclick=function(){$('#k6m').hidden=false;lk('k6')};
+  Object.keys(ST.lk).forEach(function(k){$('#tk'+k.slice(1)).classList.add('on')});
+  /* refleksi */
+  var SD=['Aku dapat menjelaskan komponen dan prinsip kerja sel elektrolisis.','Aku dapat menentukan katode, anode, dan arah elektron serta ion.','Aku dapat menulis reaksi elektrolisis leburan NaCl.','Aku dapat membedakan sel volta dan sel elektrolisis.'],LV=['Pilih','1 · Belum paham','2 · Sedikit paham','3 · Paham','4 · Sangat paham'];
+  $('#sd').innerHTML=SD.map(function(t,i){return '<label class="f" for="sd'+i+'" style="font-weight:400">'+t+'</label><select id="sd'+i+'">'+LV.map(function(l,j){return '<option value="'+(j?j:'')+'">'+l+'</option>'}).join('')+'</select>'}).join('');
+  var R=ST.ref;if(R){$('#r1').value=R.a;$('#r2').value=R.b;$('#r3').value=R.c||'';R.s.forEach(function(v,i){$('#sd'+i).value=v});rekap()}
+  $('#rb').onclick=function(){var a=$('#r1').value.trim(),b=$('#r2').value.trim(),s=SD.map(function(_,i){return $('#sd'+i).value});if(a.length<5||b.length<5||s.indexOf('')>-1){$('#rh').textContent='Isi dua refleksi pertama dan semua penilaian diri.';return}$('#rh').textContent='';ST.ref={a:a,b:b,c:$('#r3').value.trim(),s:s};done('ref');rekap();kirim({jenis:'refleksi',refleksi:{paham:a,bingung:b,pertanyaan:ST.ref.c},penilaian_diri:s,skor_awal:ST.pre?ST.pre.s:null,skor_akhir:ST.post?ST.post.s:null,lkpd_selesai:Object.keys(ST.lk).length},$('#rk'))};
+}
+function rekap(){
+  var R=ST.ref,lkn=Object.keys(ST.lk).length,t='REKAP PEMBELAJARAN · Elektrolisis Pertemuan 1\nNama: '+ST.nama+'\nKelas: '+ST.kelas+'\nAsesmen awal: '+(ST.pre?ST.pre.s+'/5':'belum')+'\nLKPD: '+lkn+'/6 kegiatan\nAsesmen akhir: '+(ST.post?ST.post.s+'/20 (nilai '+Math.round(ST.post.s/20*100)+')':'belum')+'\nPaham: '+R.a+'\nMasih bingung: '+R.b+'\nPertanyaan: '+(R.c||'-')+'\nPenilaian diri (1-4): '+R.s.join(', ');
+  $('#rk').innerHTML='<div class="res"><b>Rekap belajarmu</b><p style="margin:6px 0">Salin rekap ini lalu tempel di Google Classroom sebagai bukti pengerjaan.</p><textarea id="rkT" readonly style="min-height:190px">'+t+'</textarea><div class="row"><button class="btn" id="rkC">Salin rekap</button><button class="btn g" id="rkP">Cetak</button><span class="hint" id="rkM"></span></div></div>';
+  $('#rkC').onclick=function(){var a=$('#rkT');a.select();try{navigator.clipboard.writeText(a.value).then(function(){$('#rkM').textContent='Tersalin.'},function(){document.execCommand('copy');$('#rkM').textContent='Tersalin.'})}catch(e){try{document.execCommand('copy');$('#rkM').textContent='Tersalin.'}catch(x){$('#rkM').textContent='Salin manual dari kotak di atas.'}}};
+  $('#rkP').onclick=function(){window.print()};
+}
+})();
+</script></body></html>
